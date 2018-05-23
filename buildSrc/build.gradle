@@ -1,0 +1,36 @@
+group 'testplugin'
+version '1.0'
+
+// 使用groovy插件编译groovy源码
+apply plugin: 'groovy'
+// 用来创建一个插件jar文件并且存储在本地maven库里 repo目录
+apply plugin: 'maven'
+//
+apply plugin: 'java-gradle-plugin'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // gradle sdk
+    compile gradleApi()
+    //groovy sdk
+    compile localGroovy()
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:1.2.41"
+   // implementation 'com.android.tools.build:gradle:2.3.0'
+    implementation 'com.github.javaparser:javaparser-core:3.6.6'
+    implementation 'com.squareup:javapoet:1.11.1'
+
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('/Users/a/Android/gradlePlugin/repo'))
+        }
+
+    }
+}
